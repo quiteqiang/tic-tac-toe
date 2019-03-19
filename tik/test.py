@@ -73,8 +73,8 @@ def getPlayerMove(board):
 
 
 def chooseRandomMoveFromList(board, movesList):
-    # 随机返回一个可以落子的坐标
-    # 如果没有所给的movesList中没有可以落子的，返回None
+    # random return a location to put 
+    # if movesList has no place to put，return None
     possibleMoves = []
     for i in movesList:
         if isSpaceFree(board, i):
@@ -87,15 +87,15 @@ def chooseRandomMoveFromList(board, movesList):
 
 
 def getComputerMove(board, computerLetter):
-    # 确定电脑的落子位置
+    # check the computer's input pocation
     if computerLetter == 'X':
         playerLetter = 'O'
     else:
         playerLetter = 'X'
 
 
-    # Tic Tac Toe AI核心算法:
-    # 首先判断电脑方能否通过一次落子直接获得游戏胜利
+    # Tic Tac Toe AI algorithm:
+    # check if the Ai can win the game within one step
     for i in range(1, 10):
         copy = getBoardCopy(board)
         if isSpaceFree(copy, i):
@@ -104,7 +104,7 @@ def getComputerMove(board, computerLetter):
                 return i
 
 
-    # 判断玩家下一次落子能否获得胜利，如果能，给它堵上
+    # check if the player can win with one more step, stop him
     for i in range(1, 10):
         copy = getBoardCopy(board)
         if isSpaceFree(copy, i):
@@ -113,23 +113,23 @@ def getComputerMove(board, computerLetter):
                 return i
 
 
-    # 如果角上能落子的话，在角上落子
+    # in the corner
     move = chooseRandomMoveFromList(board, [1, 3, 7, 9])
     if move != None:
         return move
 
 
-    # 如果能在中心落子的话，在中心落子
+    # in the center
     if isSpaceFree(board, 5):
         return 5
 
 
-    # 在边上落子
+    # on the endge
     return chooseRandomMoveFromList(board, [2, 4, 6, 8])
 
 
 def isBoardFull(board):
-    # 如果棋盘满了，返回True
+    # if board full，return True
     for i in range(1, 10):
         if isSpaceFree(board, i):
             return False
@@ -142,7 +142,7 @@ print('Welcome to Tic Tac Toe!')
 
 
 while True:
-    # 更新棋盘
+    # renew the playboard 
     theBoard = [' '] * 10
     playerLetter, computerLetter = inputPlayerLetter()
     turn = whoGoesFirst()
@@ -152,7 +152,7 @@ while True:
 
     while gameIsPlaying:
         if turn == 'player':
-            #玩家回合
+            #Player turn
             drawBoard(theBoard)
             move = getPlayerMove(theBoard)
             makeMove(theBoard, playerLetter, move)
@@ -172,7 +172,7 @@ while True:
 
 
         else:
-            # 电脑回合
+            # computer's turn
             move = getComputerMove(theBoard, computerLetter)
             makeMove(theBoard, computerLetter, move)
 
