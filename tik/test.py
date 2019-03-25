@@ -1,5 +1,6 @@
-# Tic Tac Toe
-
+#!/usr/bin/python3
+# Tic Tac Toe 
+# Brandon George and Qiang Wang
 
 import random
 
