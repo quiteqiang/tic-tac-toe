@@ -4,7 +4,7 @@
 import random
 
 
-def drawBoard(board):
+def drawBoard(board=['0','1','2','3','4','5','6','7','8','9']):
     print('\n\n\n\n')
     print('\t\t\t┌─┬─┬─┐')
     print('\t\t\t│'+board[7]+'│'+board[8]+'│'+board[9]+'│')
@@ -136,7 +136,19 @@ def isBoardFull(board):
     return True
 
 
-
+def whoStart():
+    print('Who do you want go first? ([C]omputer/[P]layer)')
+    start = input().upper()
+    print(start)
+    while start != 'C' and start !='P':
+        print('Invalid input try again')
+        whoStart()
+    if start == 'C':
+        start = 'computer'
+    if start =='P':
+        start = 'player'
+    return start
+    
 
 print('Welcome to Tic Tac Toe!')
 
@@ -145,7 +157,8 @@ while True:
     # renew the playboard 
     theBoard = [' '] * 10
     playerLetter, computerLetter = inputPlayerLetter()
-    turn = whoGoesFirst()
+    drawBoard()
+    turn = whoStart()
     print('The ' + turn + ' will go first.')
     gameIsPlaying = True
 
@@ -153,7 +166,7 @@ while True:
     while gameIsPlaying:
         if turn == 'player':
             #Player turn
-            drawBoard(theBoard)
+            drawBoard(theBoard)  #check the position before draw the board
             move = getPlayerMove(theBoard)
             makeMove(theBoard, playerLetter, move)
 
