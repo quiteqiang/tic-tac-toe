@@ -2,18 +2,31 @@
 # Tic Tac Toe 
 # Brandon George and Qiang Wang
 
-import random
+import random, json
 
 
-def drawBoard(board=['0','1','2','3','4','5','6','7','8','9']):
-    print('\n\n\n\n')
-    print('\t\t\t┌─┬─┬─┐')
+def drawBoard(board=['0','0,0','1,0','2,0','0,1','1,1','2,1','0,2','1,2','2,2']):
+    print('\n')
+    if board!=['0','0,0','1,0','2,0','0,1','1,1','2,1','0,2','1,2','2,2']:
+        print('\t\t\t┌─┬─┬─┐')
+    else:
+        print('\t\t\t┌───┬───┬───┐')
     print('\t\t\t│'+board[7]+'│'+board[8]+'│'+board[9]+'│')
-    print('\t\t\t├─┼─┼─┤')
+    if board!=['0','0,0','1,0','2,0','0,1','1,1','2,1','0,2','1,2','2,2']:
+        print('\t\t\t├─┼─┼─┤')
+    else:
+        print('\t\t\t├───┼───┼───┤')
     print('\t\t\t│'+board[4]+'│'+board[5]+'│'+board[6]+'│')
-    print('\t\t\t├─┼─┼─┤')
+    if board!=['0','0,0','1,0','2,0','0,1','1,1','2,1','0,2','1,2','2,2']:
+        print('\t\t\t├─┼─┼─┤')
+    else:
+        print('\t\t\t├───┼───┼───┤')
     print('\t\t\t│'+board[1]+'│'+board[2]+'│'+board[3]+'│')
-    print('\t\t\t└─┴─┴─┘')
+    if board!=['0','0,0','1,0','2,0','0,1','1,1','2,1','0,2','1,2','2,2']:
+        print('\t\t\t└─┴─┴─┘')
+    else:
+        print('\t\t\t└───┴───┴───┘')
+    print('\n')
 
 
 def inputPlayerLetter():
@@ -66,8 +79,8 @@ def isSpaceFree(board, move):
 
 
 def getPlayerMove(board):
-    move = ' '
-    while move not in '1 2 3 4 5 6 7 8 9'.split() or not isSpaceFree(board, int(move)):
+    move = '0'
+    while move not in '1 2 3 4 5 6 7 8 9'.split() and not isSpaceFree(board, int(move)):
         print('What is your next move? (1-9)')
         move = input()
         return int(move)
@@ -125,7 +138,7 @@ def getComputerMove(board, computerLetter):
         return 5
 
 
-    # on the endge
+    # on the edge
     return chooseRandomMoveFromList(board, [2, 4, 6, 8])
 
 
@@ -149,7 +162,12 @@ def whoStart():
     if start =='P':
         start = 'player'
     return start
-    
+
+def useMemo():
+    print('Do you want to use memoization? ([Y]es/[N]o)')
+    return input().upper().startswith('N')
+
+
 
 print('Welcome to Tic Tac Toe!')
 
@@ -159,6 +177,7 @@ while True:
     theBoard = [' '] * 10
     playerLetter, computerLetter = inputPlayerLetter()
     drawBoard()
+    memo = useMemo()
     turn = whoStart()
     print('The ' + turn + ' will go first.')
     gameIsPlaying = True
@@ -187,7 +206,10 @@ while True:
 
         else:
             # computer's turn
-            move = getComputerMove(theBoard, computerLetter)
+            if memo:
+                move = getComputerMove(theBoard, computerLetter)
+            else:
+                move = getComputerMove(theBoard, computerLetter)
             makeMove(theBoard, computerLetter, move)
 
 
