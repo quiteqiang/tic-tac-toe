@@ -80,8 +80,10 @@ def isSpaceFree(board, move):
 def getPlayerMove(board):
     move = ' '
     while move not in '1 2 3 4 5 6 7 8 9'.split():# or not isSpaceFree(board, int(move)):
-        print('What is your next move? (1-9)')
-        move = input()
+#        print('What is your next move? (1-9)')
+        x, y = input("Enter two numbers here: ").split()
+        move = 3* int(x) + int(y) + 1
+#        move = input()
         if board[int(move)] != ' ':
             print ('The spot was token')
             return getPlayerMove(board)
@@ -89,7 +91,7 @@ def getPlayerMove(board):
 
 
 def chooseRandomMoveFromList(board, movesList):
-    # random return a location to put 
+    # random return a location to put
     # if movesList has no place to put，return None
     possibleMoves = []
     for i in movesList:
@@ -168,12 +170,12 @@ def whoStart():
 def useMemo():
     print('Do you want to use memoization? ([Y]es/[N]o)')
     return input().upper().startswith('N')
-    
+
 print('Welcome to Tic Tac Toe!')
 
 
 while True:
-    # renew the playboard 
+    # renew the playboard
     theBoard = [' '] * 10
     playerLetter, computerLetter = inputPlayerLetter()
     drawBoard()
