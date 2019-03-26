@@ -1,7 +1,10 @@
+#! /usr/bin/pyton3
 # Tic Tac Toe
+# brandon george and qiang wang
 
 
-import random, json
+# import json
+import random
 
 
 def drawBoard(board=['0','0,0','1,0','2,0','0,1','1,1','2,1','0,2','1,2','2,2']):
