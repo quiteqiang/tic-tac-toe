@@ -1,6 +1,5 @@
-#!/usr/bin/python3
-# Tic Tac Toe 
-# Brandon George and Qiang Wang
+# Tic Tac Toe
+
 
 import random
 
@@ -67,9 +66,12 @@ def isSpaceFree(board, move):
 
 def getPlayerMove(board):
     move = ' '
-    while move not in '1 2 3 4 5 6 7 8 9'.split() or not isSpaceFree(board, int(move)):
+    while move not in '1 2 3 4 5 6 7 8 9'.split():# or not isSpaceFree(board, int(move)):
         print('What is your next move? (1-9)')
         move = input()
+        if board[int(move)] != ' ':
+            print ('The spot was token')
+            return getPlayerMove(board)
         return int(move)
 
 
@@ -150,7 +152,18 @@ def whoStart():
         start = 'player'
     return start
     
+def validInput(board, move):
+    if board[move] == 'X' or board[move] == 'O':
+        canPut = False
+    else:
+        return True
+    while canPut == False:
+        print ('The spot was token')
+        getPlayerMove(board)
+        validInput(board, letter, move)
 
+        
+    
 print('Welcome to Tic Tac Toe!')
 
 
@@ -168,6 +181,9 @@ while True:
         if turn == 'player':
             #Player turn
             drawBoard(theBoard)  #check the position before draw the board
+            print ('length of theBoard' +str(len (theBoard)))
+            for i in range(len (theBoard)):
+                print ("theBoard------>"+theBoard[i])
             move = getPlayerMove(theBoard)
             makeMove(theBoard, playerLetter, move)
 
