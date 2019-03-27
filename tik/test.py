@@ -146,6 +146,8 @@ def getComputerMove(board, computerLetter):
     return chooseRandomMoveFromList(board, [2, 4, 6, 8])
 
 
+
+
 def isBoardFull(board):
     # if board full，return True
     for i in range(1, 10):
@@ -171,6 +173,9 @@ def useMemo():
     print('Do you want to use memoization? ([Y]es/[N]o)')
     return input().upper().startswith('N')
 
+
+
+
 print('Welcome to Tic Tac Toe!')
 
 
@@ -190,14 +195,15 @@ while True:
             #Player turn
             drawBoard(theBoard)  #check the position before draw the board
             print ('length of theBoard' +str(len (theBoard)))
-            for i in range(len (theBoard)):
-                print ("theBoard------>"+theBoard[i])
+            # for i in range(len (theBoard)):
+            #     print ("theBoard------>"+theBoard[i])
             move = getPlayerMove(theBoard)
             makeMove(theBoard, playerLetter, move)
 
 
             if isWinner(theBoard, playerLetter):
                 drawBoard(theBoard)
+                print (getBoardCopy(theBoard))
                 print('Hooray! You have won the game!')
                 gameIsPlaying = False
             else:
@@ -220,6 +226,7 @@ while True:
 
             if isWinner(theBoard, computerLetter):
                 drawBoard(theBoard)
+                print (getBoardCopy(theBoard))
                 print('The computer has beaten you! You lose.')
                 gameIsPlaying = False
             else:
