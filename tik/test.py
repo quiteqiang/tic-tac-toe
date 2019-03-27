@@ -1,10 +1,9 @@
-#! /usr/bin/pyton3
+#! /usr/bin/python3
 # Tic Tac Toe
 # brandon george and qiang wang
 
 
-# import json
-import random
+import json, random
 
 
 def drawBoard(board=['0','0,0','1,0','2,0','0,1','1,1','2,1','0,2','1,2','2,2']):
@@ -85,7 +84,7 @@ def getPlayerMove(board):
     while move not in '1 2 3 4 5 6 7 8 9'.split():# or not isSpaceFree(board, int(move)):
 #        print('What is your next move? (1-9)')
         x, y = input("Enter two numbers here: ").split()
-        move = 3* int(x) + int(y) + 1
+        move = 3* int(y) + int(x) + 1
 #        move = input()
         if board[int(move)] != ' ':
             print ('The spot was token')
@@ -172,7 +171,7 @@ def whoStart():
 
 def useMemo():
     print('Do you want to use memoization? ([Y]es/[N]o)')
-    return input().upper().startswith('N')
+    return input().upper() == "Y"
 
 print('Welcome to Tic Tac Toe!')
 
@@ -183,6 +182,7 @@ while True:
     playerLetter, computerLetter = inputPlayerLetter()
     drawBoard()
     memo = useMemo()
+    moves = []
     turn = whoStart()
     print('The ' + turn + ' will go first.')
     gameIsPlaying = True
@@ -192,9 +192,6 @@ while True:
         if turn == 'player':
             #Player turn
             drawBoard(theBoard)  #check the position before draw the board
-            print ('length of theBoard' +str(len (theBoard)))
-            for i in range(len (theBoard)):
-                print ("theBoard------>"+theBoard[i])
             move = getPlayerMove(theBoard)
             makeMove(theBoard, playerLetter, move)
 
