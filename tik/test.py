@@ -3,7 +3,7 @@
 # brandon george and qiang wang
 
 
-import json, random
+import json, random, copy
 
 
 def drawBoard(board=['0','0,0','1,0','2,0','0,1','1,1','2,1','0,2','1,2','2,2']):
@@ -69,10 +69,7 @@ def isWinner(bo, le):
 
 
 def getBoardCopy(board):
-    dupeBoard = []
-    for i in board:
-        dupeBoard.append(i)
-    return dupeBoard
+    return copy.deepcopy(board)
 
 
 def isSpaceFree(board, move):
@@ -107,11 +104,14 @@ def chooseRandomMoveFromList(board, movesList):
 
 
 def getComputerMove(board, computerLetter):
+    computerLetter = 'X'
+    playerLetter = 'O'
+
     # check the computer's input pocation
-    if computerLetter == 'X':
-        playerLetter = 'O'
-    else:
-        playerLetter = 'X'
+    # if computerLetter == 'X':
+    #     playerLetter = 'O'
+    # else:
+    #     playerLetter = 'X'
 
 
     # Tic Tac Toe AI algorithm:
@@ -175,16 +175,25 @@ def useMemo():
     print('Do you want to use memoization? ([Y]es/[N]o)')
     return input().upper() == "Y"
 
-
+def spotPlaced(board):
+    copy = getBoardCopy(board)
+    placedspot = []
+    for spot in range(1, 10):
+        if (not isSpaceFree(copy, spot)):
+            placedspot.append(spot)
+    return placedspot
 
 
 print('Welcome to Tic Tac Toe!')
 
-
+memoD = {}
 while True:
     # renew the playboard
+    string =""
     theBoard = [' '] * 10
-    playerLetter, computerLetter = inputPlayerLetter()
+    playerLetter = 'O'
+    computerLetter = 'X'
+    #playerLetter, computerLetter = inputPlayerLetter()
     drawBoard()
     memo = useMemo()
     moves = []
@@ -198,12 +207,18 @@ while True:
             #Player turn
             drawBoard(theBoard)  #check the position before draw the board
             move = getPlayerMove(theBoard)
+            initalBoard = getBoardCopy(theBoard)
             makeMove(theBoard, playerLetter, move)
 
 
             if isWinner(theBoard, playerLetter):
                 drawBoard(theBoard)
                 print (getBoardCopy(theBoard))
+                memoD[str(initalBoard)] = {"l": move}
+                print (memoD)
+                # for i in memoD:
+                #     print (i)
+                print ("Spotplaced "+ str(spotPlaced(theBoard)))
                 print('Hooray! You have won the game!')
                 gameIsPlaying = False
             else:
@@ -217,16 +232,24 @@ while True:
 
         else:
             # computer's turn
+            move = None
             if memo:
+                if str(theBoard) in memoD.keys():
+                    if 'w' in memoD[str(theBoard)].keys():
+                        move = getMemoization(memoD)
+            if move == None:
                 move = getComputerMove(theBoard, computerLetter)
-            else:
-                move = getComputerMove(theBoard, computerLetter)
+            initalBoard = getBoardCopy(theBoard)
             makeMove(theBoard, computerLetter, move)
-
 
             if isWinner(theBoard, computerLetter):
                 drawBoard(theBoard)
                 print (getBoardCopy(theBoard))
+
+                memoD[str(initalBoard)] = {"w": move}
+                print (memoD)
+
+                print ("Spotplaced "+ str(spotPlaced(theBoard)))
                 print('The computer has beaten you! You lose.')
                 gameIsPlaying = False
             else:
